@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -15,8 +14,10 @@ import androidx.navigation.compose.rememberNavController
 import com.lnight.calorytracker.navigation.navigate
 import com.lnight.calorytracker.ui.theme.CaloryTrackerTheme
 import com.lnight.core.navigation.Route
+import com.lnight.onboarding_presentation.activity.ActivityScreen
 import com.lnight.onboarding_presentation.age.AgeScreen
 import com.lnight.onboarding_presentation.gender.GenderScreen
+import com.lnight.onboarding_presentation.goal.GoalScreen
 import com.lnight.onboarding_presentation.height.HeightScreen
 import com.lnight.onboarding_presentation.weight.WeightScreen
 import com.lnight.onboarding_presentation.welcome.WelcomeScreen
@@ -67,10 +68,14 @@ class MainActivity : ComponentActivity() {
 
                         }
                         composable(Route.ACTIVITY) {
-
+                            ActivityScreen(
+                                onNavigate = navController::navigate
+                            )
                         }
                         composable(Route.GOAL) {
-
+                            GoalScreen(
+                                onNavigate = navController::navigate
+                            )
                         }
                         composable(Route.TRACKER_OVERVIEW) {
 
