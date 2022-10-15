@@ -37,7 +37,7 @@ class WeightViewModel @Inject constructor(
         viewModelScope.launch {
             val weightNumber = weight.toFloatOrNull() ?: kotlin.run {
                 _uiEvent.send(
-                    UiEvent.ShowShackbar(
+                    UiEvent.ShowSnackbar(
                         UiText.StringResource(R.string.error_weight_cant_be_empty)
                     )
                 )

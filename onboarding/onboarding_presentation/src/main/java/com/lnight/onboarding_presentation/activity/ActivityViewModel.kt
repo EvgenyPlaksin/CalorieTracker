@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lnight.core.domain.model.ActivityLevel
-import com.lnight.core.domain.model.Gender
 import com.lnight.core.domain.preferences.Preferences
 import com.lnight.core.navigation.Route
 import com.lnight.core.util.UiEvent

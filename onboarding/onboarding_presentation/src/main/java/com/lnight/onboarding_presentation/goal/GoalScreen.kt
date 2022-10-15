@@ -14,8 +14,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lnight.core.util.UiEvent
 import com.lnight.core_ui.LocalSpacing
 import com.lnight.core.R
-import com.lnight.core.domain.model.ActivityLevel
-import com.lnight.core.domain.model.Gender
 import com.lnight.core.domain.model.GoalType
 import com.lnight.onboarding_presentation.components.ActionButton
 import com.lnight.onboarding_presentation.components.SelectableButton
