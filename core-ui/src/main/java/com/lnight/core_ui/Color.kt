@@ -1,4 +1,4 @@
-package com.lnight.calorytracker.ui.theme
+package com.lnight.core_ui
 
 import androidx.compose.ui.graphics.Color
 
