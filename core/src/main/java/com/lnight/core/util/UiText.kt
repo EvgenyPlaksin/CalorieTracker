@@ -2,7 +2,7 @@ package com.lnight.core.util
 
 import android.content.Context
 
-sealed class UiText {
+sealed class UiText() {
     data class DynamicString(val text: String): UiText()
     data class StringResource(val resId: Int): UiText()
 

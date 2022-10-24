@@ -24,11 +24,11 @@ import com.lnight.tracker_presentation.components.UnitDisplay
 import com.lnight.tracker_presentation.tracker_overview.Meal
 
 @Composable
-fun ExpendableMeal(
+fun ExpandableMeal(
     meal: Meal,
+    onToggleClick: () -> Unit,
     content: @Composable () -> Unit,
-    modifier: Modifier,
-    onToggleClick: () -> Unit
+    modifier: Modifier
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current
@@ -59,10 +59,12 @@ fun ExpendableMeal(
                         style = MaterialTheme.typography.h3
                     )
                     Icon(
-                        imageVector = if (meal.isExpended) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                        contentDescription = if (meal.isExpended) stringResource(id = R.string.collapse) else stringResource(
-                            id = R.string.extend
-                        )
+                        imageVector = if (meal.isExpanded) {
+                            Icons.Default.KeyboardArrowUp
+                        } else Icons.Default.KeyboardArrowDown,
+                        contentDescription = if(meal.isExpanded) {
+                            stringResource(id = R.string.collapse)
+                        } else stringResource(id = R.string.extend)
                     )
                 }
                 Spacer(modifier = Modifier.height(spacing.spaceSmall))
@@ -98,7 +100,7 @@ fun ExpendableMeal(
             }
         }
         Spacer(modifier = Modifier.height(spacing.spaceMedium))
-        AnimatedVisibility(visible = meal.isExpended) {
+        AnimatedVisibility(visible = meal.isExpanded) {
             content()
         }
     }

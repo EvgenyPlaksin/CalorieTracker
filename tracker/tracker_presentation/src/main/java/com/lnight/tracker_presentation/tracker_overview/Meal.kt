@@ -14,7 +14,7 @@ data class Meal(
     val protein: Int = 0,
     val fat: Int = 0,
     val calories: Int = 0,
-    val isExpended: Boolean = false
+    val isExpanded: Boolean = false
 )
 
 val defaultMeals = listOf(

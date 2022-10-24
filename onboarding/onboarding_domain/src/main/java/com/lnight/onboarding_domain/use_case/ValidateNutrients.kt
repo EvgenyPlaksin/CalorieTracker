@@ -31,12 +31,12 @@ class ValidateNutrients {
         )
     }
 
-    sealed class Result {
+    sealed interface Result {
         data class Success(
             val carbsRatio: Float,
             val proteinRatio: Float,
             val fatRatio: Float
-        ) : Result()
-        data class Error(val message: UiText) : Result()
+        ) : Result
+        data class Error(val message: UiText) : Result
     }
 }

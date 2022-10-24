@@ -26,8 +26,10 @@ fun NutrientsHeader(
     state: TrackerOverviewState,
     modifier: Modifier = Modifier
 ) {
-   val spacing = LocalSpacing.current
-   val animatedCalorieCount = animateIntAsState(targetValue = state.totalCalories)
+    val spacing = LocalSpacing.current
+    val animatedCalorieCount = animateIntAsState(
+        targetValue = state.totalCalories
+    )
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -66,7 +68,7 @@ fun NutrientsHeader(
                     unit = stringResource(id = R.string.kcal),
                     amountColor = MaterialTheme.colors.onPrimary,
                     amountTextSize = 40.sp,
-                    unitColor = MaterialTheme.colors.onPrimary
+                    unitColor = MaterialTheme.colors.onPrimary,
                 )
             }
         }
@@ -86,21 +88,21 @@ fun NutrientsHeader(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            NutrientsBarInfo(
-               value = state.totalCalories,
+            NutrientBarInfo(
+                value = state.totalCarbs,
                 goal = state.carbsGoal,
                 name = stringResource(id = R.string.carbs),
                 color = CarbColor,
                 modifier = Modifier.size(90.dp)
             )
-            NutrientsBarInfo(
+            NutrientBarInfo(
                 value = state.totalProtein,
                 goal = state.proteinGoal,
                 name = stringResource(id = R.string.protein),
                 color = ProteinColor,
                 modifier = Modifier.size(90.dp)
             )
-            NutrientsBarInfo(
+            NutrientBarInfo(
                 value = state.totalFat,
                 goal = state.fatGoal,
                 name = stringResource(id = R.string.fat),

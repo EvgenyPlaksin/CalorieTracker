@@ -25,7 +25,7 @@ import com.lnight.core.R
 import com.lnight.tracker_presentation.components.UnitDisplay
 
 @Composable
-fun NutrientsBarInfo(
+fun NutrientBarInfo(
     value: Int,
     goal: Int,
     name: String,

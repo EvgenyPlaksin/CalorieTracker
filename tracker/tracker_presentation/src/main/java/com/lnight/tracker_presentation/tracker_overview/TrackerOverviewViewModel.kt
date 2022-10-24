@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TrackerOverviewViewModel @Inject constructor(
     preferences: Preferences,
-    private val trackerUseCases: TrackerUseCases
+    private val trackerUseCases: TrackerUseCases,
 ): ViewModel() {
 
     var state by mutableStateOf(TrackerOverviewState())
@@ -33,6 +33,7 @@ class TrackerOverviewViewModel @Inject constructor(
     private var getFoodsForDateJob: Job? = null
 
     init {
+        refreshFoods()
         preferences.saveShouldShowOnboarding(false)
     }
 
@@ -40,13 +41,15 @@ class TrackerOverviewViewModel @Inject constructor(
         when(event) {
             is TrackerOverviewEvent.OnAddFoodClick -> {
                 viewModelScope.launch {
-                    _uiEvent.send(UiEvent.Navigate(
-                        route = Route.SEARCH
-                                + "/${event.meal.mealType.name}"
-                                + "/${state.date.dayOfMonth}"
-                                + "/${state.date.monthValue}"
-                                + "/${state.date.year}"
-                    ))
+                    _uiEvent.send(
+                        UiEvent.Navigate(
+                            route = Route.SEARCH
+                                    + "/${event.meal.mealType.name}"
+                                    + "/${state.date.dayOfMonth}"
+                                    + "/${state.date.monthValue}"
+                                    + "/${state.date.year}"
+                        )
+                    )
                 }
             }
             is TrackerOverviewEvent.OnDeleteTrackedFoodClick -> {
@@ -71,7 +74,7 @@ class TrackerOverviewViewModel @Inject constructor(
                 state = state.copy(
                     meals = state.meals.map {
                         if(it.name == event.meal.name) {
-                            it.copy(isExpended = !it.isExpended)
+                            it.copy(isExpanded = !it.isExpanded)
                         } else it
                     }
                 )
@@ -96,14 +99,14 @@ class TrackerOverviewViewModel @Inject constructor(
                     caloriesGoal = nutrientsResult.caloriesGoal,
                     trackedFoods = foods,
                     meals = state.meals.map {
-                        val nutrientsForMeal = nutrientsResult
-                            .mealNutrients[it.mealType]
-                            ?: return@map it.copy(
-                                carbs = 0,
-                                protein = 0,
-                                fat = 0,
-                                calories = 0
-                            )
+                        val nutrientsForMeal =
+                            nutrientsResult.mealNutrients[it.mealType]
+                                ?: return@map it.copy(
+                                    carbs = 0,
+                                    protein = 0,
+                                    fat = 0,
+                                    calories = 0
+                                )
                         it.copy(
                             carbs = nutrientsForMeal.carbs,
                             protein = nutrientsForMeal.protein,
@@ -112,7 +115,7 @@ class TrackerOverviewViewModel @Inject constructor(
                         )
                     }
                 )
-            }.launchIn(viewModelScope)
+            }
+            .launchIn(viewModelScope)
     }
-
 }
