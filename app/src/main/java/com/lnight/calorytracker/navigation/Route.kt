@@ -1,4 +1,4 @@
-package com.lnight.core.navigation
+package com.lnight.calorytracker.navigation
 
 object Route {
     const val WELCOME = "welcome"

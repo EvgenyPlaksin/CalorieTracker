@@ -11,12 +11,10 @@ import androidx.compose.ui.text.style.TextAlign
 import com.lnight.core_ui.LocalSpacing
 import com.lnight.onboarding_presentation.components.ActionButton
 import com.lnight.core.R
-import com.lnight.core.navigation.Route
-import com.lnight.core.util.UiEvent
 
 @Composable
 fun WelcomeScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit
+    onNextClick: () -> Unit
 ) {
     val spacing = LocalSpacing.current
     Column(
@@ -34,7 +32,7 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.height(spacing.spaceMedium))
         ActionButton(
             text = stringResource(id = R.string.next),
-            onClick = { onNavigate(UiEvent.Navigate(Route.GENDER)) },
+            onClick = { onNextClick() },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
