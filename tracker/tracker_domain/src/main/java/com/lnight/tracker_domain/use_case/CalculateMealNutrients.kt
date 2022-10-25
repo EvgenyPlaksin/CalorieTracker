@@ -1,5 +1,6 @@
 package com.lnight.tracker_domain.use_case
 
+import android.util.Log
 import com.lnight.core.domain.model.ActivityLevel
 import com.lnight.core.domain.model.Gender
 import com.lnight.core.domain.model.GoalType
@@ -14,41 +15,62 @@ class CalculateMealNutrients(
 ) {
 
     operator fun invoke(trackedFoods: List<TrackedFood>): Result {
-        val allNutrients = trackedFoods
-            .groupBy { it.mealType }
-            .mapValues { entry ->
-                val type = entry.key
-                val foods = entry.value
-                MealNutrients(
-                    carbs = foods.sumOf { it.carbs },
-                    protein = foods.sumOf { it.protein },
-                    fat = foods.sumOf { it.fat },
-                    calories = foods.sumOf { it.calories },
-                    mealType = type
-                )
-            }
-        val totalCarbs = allNutrients.values.sumOf { it.carbs }
-        val totalProtein = allNutrients.values.sumOf { it.protein }
-        val totalFat = allNutrients.values.sumOf { it.fat }
-        val totalCalories = allNutrients.values.sumOf { it.calories }
+        if(trackedFoods.isNotEmpty()) {
+            val allNutrients = trackedFoods
+                .groupBy { it.mealType }
+                .mapValues { entry ->
+                    val type = entry.key
+                    val foods = entry.value
+                    MealNutrients(
+                        carbs = foods.sumOf { it.carbs },
+                        protein = foods.sumOf { it.protein },
+                        fat = foods.sumOf { it.fat },
+                        calories = foods.sumOf { it.calories },
+                        mealType = type
+                    )
+                }
+            val totalCarbs = allNutrients.values.sumOf { it.carbs }
+            val totalProtein = allNutrients.values.sumOf { it.protein }
+            val totalFat = allNutrients.values.sumOf { it.fat }
+            val totalCalories = allNutrients.values.sumOf { it.calories }
 
-        val userInfo = preferences.loadUserInfo()
-        val caloryGoal = dailyCaloryRequirement(userInfo)
-        val carbsGoal = (caloryGoal * userInfo.carbRatio / 4f).roundToInt()
-        val proteinGoal = (caloryGoal * userInfo.proteinRatio / 4f).roundToInt()
-        val fatGoal = (caloryGoal * userInfo.fatRatio / 9f).roundToInt()
+            Log.e("TAG", "totalCalories -> ${totalCalories}, ${trackedFoods}")
 
-        return Result(
-            carbsGoal = carbsGoal,
-            proteinGoal = proteinGoal,
-            fatGoal = fatGoal,
-            caloriesGoal = caloryGoal,
-            totalCarbs = totalCarbs,
-            totalProtein = totalProtein,
-            totalFat = totalFat,
-            totalCalories = totalCalories,
-            mealNutrients = allNutrients
-        )
+            val userInfo = preferences.loadUserInfo()
+            val caloryGoal = dailyCaloryRequirement(userInfo)
+            val carbsGoal = (caloryGoal * userInfo.carbRatio / 4f).roundToInt()
+            val proteinGoal = (caloryGoal * userInfo.proteinRatio / 4f).roundToInt()
+            val fatGoal = (caloryGoal * userInfo.fatRatio / 9f).roundToInt()
+
+            return Result(
+                carbsGoal = carbsGoal,
+                proteinGoal = proteinGoal,
+                fatGoal = fatGoal,
+                caloriesGoal = caloryGoal,
+                totalCarbs = totalCarbs,
+                totalProtein = totalProtein,
+                totalFat = totalFat,
+                totalCalories = totalCalories,
+                mealNutrients = allNutrients
+            )
+        } else {
+            val userInfo = preferences.loadUserInfo()
+            val caloriesGoal = dailyCaloryRequirement(userInfo)
+            val carbsGoal = (caloriesGoal * userInfo.carbRatio / 4f).roundToInt()
+            val proteinGoal = (caloriesGoal * userInfo.proteinRatio / 4f).roundToInt()
+            val fatGoal = (caloriesGoal * userInfo.fatRatio / 9f).roundToInt()
+            return Result(
+                carbsGoal = carbsGoal,
+                proteinGoal = proteinGoal,
+                fatGoal = fatGoal,
+                caloriesGoal = caloriesGoal,
+                totalCarbs = 0,
+                totalProtein = 0,
+                totalFat = 0,
+                totalCalories = 0,
+                mealNutrients = emptyMap()
+            )
+        }
     }
 
     private fun bmr(userInfo: UserInfo): Int {

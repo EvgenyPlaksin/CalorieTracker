@@ -29,7 +29,10 @@ class SearchViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onEvent(event: SearchEvent) {
-        when (event) {
+        when(event) {
+            is SearchEvent.OnQueryChange -> {
+                state = state.copy(query = event.query)
+            }
             is SearchEvent.OnAmountForFoodChange -> {
                 state = state.copy(
                     trackableFood = state.trackableFood.map {
@@ -39,14 +42,8 @@ class SearchViewModel @Inject constructor(
                     }
                 )
             }
-            is SearchEvent.OnQueryChange -> {
-                state = state.copy(query = event.query)
-            }
             is SearchEvent.OnSearch -> {
                 executeSearch()
-            }
-            is SearchEvent.OnSearchFocusChange -> {
-                state = state.copy(isHintVisible = !event.isFocused && state.query.isBlank())
             }
             is SearchEvent.OnToggleTrackableFood -> {
                 state = state.copy(
@@ -55,6 +52,11 @@ class SearchViewModel @Inject constructor(
                             it.copy(isExpanded = !it.isExpanded)
                         } else it
                     }
+                )
+            }
+            is SearchEvent.OnSearchFocusChange -> {
+                state = state.copy(
+                    isHintVisible = !event.isFocused && state.query.isBlank()
                 )
             }
             is SearchEvent.OnTrackFoodClick -> {
@@ -83,7 +85,9 @@ class SearchViewModel @Inject constructor(
                 .onFailure {
                     state = state.copy(isSearching = false)
                     _uiEvent.send(
-                        UiEvent.ShowSnackbar(UiText.StringResource(R.string.error_something_went_wrong))
+                        UiEvent.ShowSnackbar(
+                            UiText.StringResource(R.string.error_something_went_wrong)
+                        )
                     )
                 }
         }

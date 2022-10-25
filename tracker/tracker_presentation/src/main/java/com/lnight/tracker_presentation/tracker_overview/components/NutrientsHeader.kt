@@ -30,6 +30,9 @@ fun NutrientsHeader(
     val animatedCalorieCount = animateIntAsState(
         targetValue = state.totalCalories
     )
+    val animatedCaloriesGoal = animateIntAsState(
+        targetValue = state.caloriesGoal
+    )
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -64,7 +67,7 @@ fun NutrientsHeader(
                     color = MaterialTheme.colors.onPrimary
                 )
                 UnitDisplay(
-                    amount = animatedCalorieCount.value,
+                    amount = animatedCaloriesGoal.value,
                     unit = stringResource(id = R.string.kcal),
                     amountColor = MaterialTheme.colors.onPrimary,
                     amountTextSize = 40.sp,

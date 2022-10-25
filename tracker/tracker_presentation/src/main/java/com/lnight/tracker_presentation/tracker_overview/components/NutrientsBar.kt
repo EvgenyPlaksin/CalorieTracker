@@ -2,11 +2,13 @@ package com.lnight.tracker_presentation.tracker_overview.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.CornerRadius
 import com.lnight.core_ui.CarbColor
@@ -48,7 +50,7 @@ fun NutrientsBar(
             targetValue = ((fat * 9f) / calorieGoal)
         )
     }
-    Canvas(modifier = modifier) {
+    Canvas(modifier = modifier.clip(RoundedCornerShape(100f))) {
         if(calories <= calorieGoal) {
             val carbsWidth = carbWidthRatio.value * size.width
             val proteinWidth = proteinWidthRatio.value * size.width

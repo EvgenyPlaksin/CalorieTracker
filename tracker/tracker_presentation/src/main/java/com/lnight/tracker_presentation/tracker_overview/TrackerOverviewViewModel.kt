@@ -1,5 +1,6 @@
 package com.lnight.tracker_presentation.tracker_overview
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -115,7 +116,36 @@ class TrackerOverviewViewModel @Inject constructor(
                         )
                     }
                 )
-            }
-            .launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
+        if(state.trackedFoods.isEmpty()) {
+            val nutrientsResult = trackerUseCases.calculateMealNutrients(emptyList())
+            state = state.copy(
+                totalCarbs = nutrientsResult.totalCarbs,
+                totalProtein = nutrientsResult.totalProtein,
+                totalFat = nutrientsResult.totalFat,
+                totalCalories = nutrientsResult.totalCalories,
+                carbsGoal = nutrientsResult.carbsGoal,
+                proteinGoal = nutrientsResult.proteinGoal,
+                fatGoal = nutrientsResult.fatGoal,
+                caloriesGoal = nutrientsResult.caloriesGoal,
+                meals = state.meals.map {
+                    val nutrientsForMeal =
+                        nutrientsResult.mealNutrients[it.mealType]
+                            ?: return@map it.copy(
+                                carbs = 0,
+                                protein = 0,
+                                fat = 0,
+                                calories = 0
+                            )
+                    it.copy(
+                        carbs = nutrientsForMeal.carbs,
+                        protein = nutrientsForMeal.protein,
+                        fat = nutrientsForMeal.fat,
+                        calories = nutrientsForMeal.calories
+                    )
+                }
+            )
+        }
+        Log.e("TAG", "kcal -> ${state.totalCalories}")
     }
 }
