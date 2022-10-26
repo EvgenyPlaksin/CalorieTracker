@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation platform(Compose.composeBom)
     implementation Compose.compiler
     implementation Compose.ui
     implementation Compose.uiToolingPreview

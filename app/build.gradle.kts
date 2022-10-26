@@ -40,16 +40,17 @@ android {
         kotlinCompilerExtensionVersion = Compose.composeCompilerVersion
     }
     packagingOptions {
-        exclude("META-INF/AL2.0")
-        exclude("META-INF/LGPL2.1")
-        exclude("**/attach_hotspot_windows.dll")
-        exclude("META-INF/licenses/ASM")
+        jniLibs.excludes.add("META-INF/AL2.0")
+        jniLibs.excludes.add("META-INF/LGPL2.1")
+        jniLibs.excludes.add("**/attach_hotspot_windows.dll")
+        jniLibs.excludes.add("META-INF/licenses/ASM")
     }
 }
 
 dependencies {
     implementation(Compose.compiler)
     implementation(Compose.ui)
+    implementation(platform(Compose.composeBom))
     implementation(Compose.uiToolingPreview)
     implementation(Compose.hiltNavigationCompose)
     implementation(Compose.material)
