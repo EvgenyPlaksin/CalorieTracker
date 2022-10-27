@@ -1,6 +1,5 @@
 package com.lnight.tracker_domain.use_case
 
-import android.util.Log
 import com.lnight.core.domain.model.ActivityLevel
 import com.lnight.core.domain.model.Gender
 import com.lnight.core.domain.model.GoalType
@@ -33,8 +32,6 @@ class CalculateMealNutrients(
             val totalProtein = allNutrients.values.sumOf { it.protein }
             val totalFat = allNutrients.values.sumOf { it.fat }
             val totalCalories = allNutrients.values.sumOf { it.calories }
-
-            Log.e("TAG", "totalCalories -> ${totalCalories}, ${trackedFoods}")
 
             val userInfo = preferences.loadUserInfo()
             val caloryGoal = dailyCaloryRequirement(userInfo)

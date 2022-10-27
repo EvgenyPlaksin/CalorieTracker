@@ -1,6 +1,5 @@
 package com.lnight.tracker_presentation.tracker_overview
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -57,7 +56,6 @@ fun TrackerOverviewScreen(
                             .padding(horizontal = spacing.spaceSmall)
                     ) {
                         state.trackedFoods.forEach { food ->
-                            Log.e("TAG", "trackedFood -> ${food.mealType.name}")
                             if(food.mealType == meal.mealType) {
                                 TrackedFoodItem(
                                     trackedFood = food,

@@ -1,6 +1,5 @@
 package com.lnight.tracker_presentation.tracker_overview
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -126,6 +125,5 @@ class TrackerOverviewViewModel @Inject constructor(
                 }
             )
         }
-        Log.e("TAG", "kcal -> ${state.totalCalories}")
     }
 }
