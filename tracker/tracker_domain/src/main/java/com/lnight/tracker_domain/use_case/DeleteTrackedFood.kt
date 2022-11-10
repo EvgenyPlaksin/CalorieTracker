@@ -7,6 +7,6 @@ class DeleteTrackedFood(
     private val repository: TrackerRepository
 ) {
      suspend operator fun invoke(trackedFood: TrackedFood) {
-       repository.deleteTrackerFood(trackedFood)
+       repository.deleteTrackedFood(trackedFood)
     }
 }

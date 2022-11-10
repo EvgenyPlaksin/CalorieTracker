@@ -39,7 +39,7 @@ class TrackerRepositoryImpl(
         dao.insertTrackerFood(food.toTrackedFoodEntity())
     }
 
-    override suspend fun deleteTrackerFood(food: TrackedFood) {
+    override suspend fun deleteTrackedFood(food: TrackedFood) {
         dao.deleteTrackerFood(food.toTrackedFoodEntity())
     }
 
