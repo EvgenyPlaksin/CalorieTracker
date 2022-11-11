@@ -11,7 +11,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.lnight.core_ui.LocalSpacing
 
 @Composable
 fun NutrientInfo(
@@ -25,8 +24,6 @@ fun NutrientInfo(
     unitColor: Color = MaterialTheme.colors.onBackground,
     nameTextStyle: TextStyle = MaterialTheme.typography.body1
 ) {
-    val spacing = LocalSpacing.current
-
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally

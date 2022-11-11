@@ -60,8 +60,9 @@ dependencies {
     testImplementation Testing.turbine 
     testImplementation Testing.composeUiTest
     testImplementation Testing.mockk
-    testImplementation Testing.mockWebServer 
+    testImplementation Testing.mockWebServer
 
+    androidTestImplementation platform(Compose.composeBom)
     androidTestImplementation Testing.junit4 
     androidTestImplementation Testing.junitAndroidExt 
     androidTestImplementation Testing.truth 

@@ -95,6 +95,7 @@ dependencies {
     testImplementation(Testing.mockk)
     testImplementation(Testing.mockWebServer)
 
+    androidTestImplementation(platform(Compose.composeBom))
     androidTestImplementation(Testing.junit4)
     androidTestImplementation(Testing.junitAndroidExt)
     androidTestImplementation(Testing.truth)
