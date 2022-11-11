@@ -2,7 +2,6 @@ package com.lnight.tracker_presentation.search
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
@@ -84,7 +83,11 @@ fun SearchScreen(
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            items(state.trackableFood) { food ->
+            items(state.trackableFood.size) { i ->
+                val food = state.trackableFood[i]
+                if(i >= state.trackableFood.size - 1 && !state.endReached && !state.isSearching) {
+                    viewModel.loadNextItems()
+                }
                 TrackableFoodItem(
                     trackableFoodUiState = food,
                     onClick = {
@@ -111,6 +114,18 @@ fun SearchScreen(
                         .fillMaxWidth()
                 )
             }
+            item {
+                if(state.isSearching && state.trackableFood.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(spacing.spaceSmall),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
         }
     }
     Box(
@@ -118,7 +133,7 @@ fun SearchScreen(
         contentAlignment = Alignment.Center
     ) {
         when {
-            state.isSearching -> CircularProgressIndicator()
+            state.isSearching && state.trackableFood.isEmpty() -> CircularProgressIndicator()
             state.trackableFood.isEmpty() -> {
                 Text(
                     text = stringResource(id = R.string.no_results),

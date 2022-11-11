@@ -10,6 +10,7 @@ import com.lnight.core.util.UiEvent
 import com.lnight.core.util.UiText
 import com.lnight.tracker_domain.use_case.TrackerUseCases
 import com.lnight.core.R
+import com.lnight.tracker_presentation.search.paginator.DefaultPaginator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -28,9 +29,44 @@ class SearchViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
+    private var queryForPaginator = ""
+
+    private val paginator = DefaultPaginator(
+        initialKey = state.page,
+        onLoadUpdated = {
+            state = state.copy(isSearching = it)
+        },
+        onRequest = { nextPage ->
+            trackerUseCases.searchFood(page = nextPage, query = queryForPaginator)
+        },
+        getNextKey = {
+            state.page + 1
+        },
+        onError = {
+            state = state.copy(isSearching = false)
+            _uiEvent.send(
+                UiEvent.ShowSnackbar(
+                    UiText.StringResource(R.string.error_something_went_wrong)
+                )
+            )
+        },
+        onSuccess = { foods, key ->
+            state = state.copy(
+                trackableFood = state.trackableFood + foods.map {
+                    TrackableFoodUiState(it)
+                },
+                isSearching = false,
+                query = "",
+                page = key,
+                endReached = foods.isEmpty()
+            )
+        }
+    )
+
     fun onEvent(event: SearchEvent) {
         when(event) {
             is SearchEvent.OnQueryChange -> {
+                queryForPaginator = event.query
                 state = state.copy(query = event.query)
             }
             is SearchEvent.OnAmountForFoodChange -> {
@@ -43,7 +79,9 @@ class SearchViewModel @Inject constructor(
                 )
             }
             is SearchEvent.OnSearch -> {
-                executeSearch()
+                state = state.copy(trackableFood = emptyList())
+                paginator.reset()
+                loadNextItems()
             }
             is SearchEvent.OnToggleTrackableFood -> {
                 state = state.copy(
@@ -65,31 +103,9 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun executeSearch() {
+    fun loadNextItems() {
         viewModelScope.launch {
-            state = state.copy(
-                isSearching = true,
-                trackableFood = emptyList()
-            )
-            trackerUseCases
-                .searchFood(state.query)
-                .onSuccess { foods ->
-                    state = state.copy(
-                        trackableFood = foods.map {
-                            TrackableFoodUiState(it)
-                        },
-                        isSearching = false,
-                        query = ""
-                    )
-                }
-                .onFailure {
-                    state = state.copy(isSearching = false)
-                    _uiEvent.send(
-                        UiEvent.ShowSnackbar(
-                            UiText.StringResource(R.string.error_something_went_wrong)
-                        )
-                    )
-                }
+            paginator.loadNextItems()
         }
     }
 
@@ -103,6 +119,7 @@ class SearchViewModel @Inject constructor(
                 date = event.date
             )
             _uiEvent.send(UiEvent.NavigateUp)
+            paginator.reset()
         }
     }
 }
