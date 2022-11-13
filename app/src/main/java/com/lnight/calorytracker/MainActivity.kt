@@ -13,9 +13,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.lnight.calorytracker.navigation.Route
 import com.lnight.calorytracker.ui.theme.CaloryTrackerTheme
 import com.lnight.core.domain.preferences.Preferences
-import com.lnight.calorytracker.navigation.Route
 import com.lnight.onboarding_presentation.activity.ActivityScreen
 import com.lnight.onboarding_presentation.age.AgeScreen
 import com.lnight.onboarding_presentation.gender.GenderScreen
@@ -108,16 +108,16 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Route.TRACKER_OVERVIEW) {
-                            TrackerOverviewScreen(
-                                onNavigateToSearch = { mealName, day, month, year ->
-                                    navController.navigate(
-                                        Route.SEARCH + "/$mealName" +
-                                                "/$day" +
-                                                "/$month" +
-                                                "/$year"
-                                    )
-                                }
-                            )
+                                TrackerOverviewScreen(
+                                    onNavigateToSearch = { mealName, day, month, year ->
+                                        navController.navigate(
+                                            Route.SEARCH + "/$mealName" +
+                                                    "/$day" +
+                                                    "/$month" +
+                                                    "/$year"
+                                        )
+                                    }
+                                )
                         }
                         composable(
                             route = Route.SEARCH + "/{mealName}/{dayOfMonth}/{month}/{year}",

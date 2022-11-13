@@ -7,6 +7,7 @@ import java.time.LocalDate
 sealed interface SearchEvent {
     data class OnQueryChange(val query: String) : SearchEvent
     object OnSearch : SearchEvent
+    object OnScrollToEnd : SearchEvent
     data class OnToggleTrackableFood(val food: TrackableFood) : SearchEvent
     data class OnAmountForFoodChange(
         val food: TrackableFood,

@@ -100,10 +100,13 @@ class SearchViewModel @Inject constructor(
             is SearchEvent.OnTrackFoodClick -> {
                 trackFood(event)
             }
+            SearchEvent.OnScrollToEnd ->  {
+                loadNextItems()
+            }
         }
     }
 
-    fun loadNextItems() {
+    private fun loadNextItems() {
         viewModelScope.launch {
             paginator.loadNextItems()
         }

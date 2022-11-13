@@ -12,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +25,8 @@ class TrackerOverviewViewModel @Inject constructor(
         private set
 
     private var getFoodsForDateJob: Job? = null
+
+    var isToday = true
 
     init {
         refreshFoods()
@@ -42,12 +45,14 @@ class TrackerOverviewViewModel @Inject constructor(
                 state = state.copy(
                     date = state.date.plusDays(1)
                 )
+                isToday = state.date.dayOfYear == LocalDate.now().dayOfYear
                 refreshFoods()
             }
             is TrackerOverviewEvent.OnPreviousDayClick -> {
                 state = state.copy(
                     date = state.date.minusDays(1)
                 )
+                isToday = state.date.dayOfYear == LocalDate.now().dayOfYear
                 refreshFoods()
             }
             is TrackerOverviewEvent.OnToggleMealClick -> {
@@ -58,6 +63,10 @@ class TrackerOverviewViewModel @Inject constructor(
                         } else it
                     }
                 )
+            }
+            TrackerOverviewEvent.OnDayChanged ->  {
+                state = state.copy(date = LocalDate.now())
+                refreshFoods()
             }
         }
     }

@@ -86,7 +86,7 @@ fun SearchScreen(
             items(state.trackableFood.size) { i ->
                 val food = state.trackableFood[i]
                 if(i >= state.trackableFood.size - 1 && !state.endReached && !state.isSearching) {
-                    viewModel.loadNextItems()
+                    viewModel.onEvent(SearchEvent.OnScrollToEnd)
                 }
                 TrackableFoodItem(
                     trackableFoodUiState = food,

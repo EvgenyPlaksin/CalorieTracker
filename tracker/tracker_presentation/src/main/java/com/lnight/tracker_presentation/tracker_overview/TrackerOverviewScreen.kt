@@ -1,9 +1,12 @@
 package com.lnight.tracker_presentation.tracker_overview
 
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -11,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lnight.core.R
 import com.lnight.core_ui.LocalSpacing
 import com.lnight.tracker_presentation.tracker_overview.components.*
+import java.time.LocalDate
 
 @Composable
 fun TrackerOverviewScreen(
@@ -20,6 +24,19 @@ fun TrackerOverviewScreen(
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current
+
+
+    LaunchedEffect(key1 = true) {
+    val mainHandler = Handler(Looper.getMainLooper())
+    mainHandler.post(object : Runnable {
+        override fun run() {
+            if(state.date.dayOfYear != LocalDate.now().dayOfYear && viewModel.isToday) {
+                viewModel.onEvent(TrackerOverviewEvent.OnDayChanged)
+            }
+            mainHandler.postDelayed(this, 1000)
+        }
+    })
+    }
 
     LazyColumn(
         modifier = Modifier
