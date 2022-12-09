@@ -13,18 +13,14 @@ A simple project that shows the best practices of clean architecture with [Jetpa
 
 > The tracker and onboarding modules consist of several modules, this improves the independence of the different models from each other.
 
-### Screenshots
+### Screenshots 
 
-![image](https://user-images.githubusercontent.com/94696816/206729891-1fcc692d-71eb-4beb-9603-ff53263e45ad.png)
+<img src="https://user-images.githubusercontent.com/94696816/206729891-1fcc692d-71eb-4beb-9603-ff53263e45ad.png" width="250" height="500" />
 
+<img src="https://user-images.githubusercontent.com/94696816/206729945-aa6b344b-325b-4a2e-a8ed-ece15ec1ec08.png" width="250" height="500" />
 
-![image](https://user-images.githubusercontent.com/94696816/206729945-aa6b344b-325b-4a2e-a8ed-ece15ec1ec08.png)
+<img src="https://user-images.githubusercontent.com/94696816/206730015-07305185-e22d-4f4b-9939-6ff9e8e45787.png" width="250" height="500" />
 
+<img src="https://user-images.githubusercontent.com/94696816/206730056-4b31e08e-c4a7-424e-8b6a-82b9f2ab32a7.png" width="250" height="500" />
 
-![image](https://user-images.githubusercontent.com/94696816/206730015-07305185-e22d-4f4b-9939-6ff9e8e45787.png)
-
-
-![image](https://user-images.githubusercontent.com/94696816/206730056-4b31e08e-c4a7-424e-8b6a-82b9f2ab32a7.png)
-
-
-![image](https://user-images.githubusercontent.com/94696816/206730089-add291a1-c5fe-489e-9d06-4669534dd95f.png)
+<img src="https://user-images.githubusercontent.com/94696816/206730089-add291a1-c5fe-489e-9d06-4669534dd95f.png" width="250" height="500" />
