@@ -11,7 +11,7 @@ A simple project that shows the best practices of clean architecture with [Jetpa
 - [buildSrc](https://github.com/EvgenyPlaksin/CalorieTracker/tree/master/buildSrc)
 - [app](https://github.com/EvgenyPlaksin/CalorieTracker/tree/master/app)
 
-> The tracker and onboarding modules consist of several modules, this improves the independence of the different models from each other.
+> The tracker and onboarding modules consist of several modules, this improves the independence of the different modules from each other.
 
 ### Screenshots 
 
